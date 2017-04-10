@@ -2,6 +2,6 @@
 ## environment: 
 ### ubuntu
 ## command:
-### qmake-qt4
+### qt4-qmake
 ### make
 ### ./p2papp
