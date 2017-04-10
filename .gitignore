@@ -1,0 +1,5 @@
+*cmake*
+*.o
+*CMake
+.DS_Store
+*.idea
