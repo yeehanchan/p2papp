@@ -3,3 +3,5 @@
 *CMake
 .DS_Store
 *.idea
+*moc_main
+p2papp
