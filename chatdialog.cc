@@ -63,6 +63,9 @@ void ChatDialog::gotReturnPressed()
         ui.textview->setTextColor(color);
 
     } else {
+        client.seqno++;
+        client.addMessageToHistory(client.nickName(), client.seqno, text);
+        client.updateVectorClock(client.nickName());
         p2pmanager->sendBroadcastMessage(text);
         appendMessage(myNickName, text);
     }

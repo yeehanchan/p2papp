@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QUdpSocket>
+#include <QTimer>
 #include "netsocket.hh"
 
 
@@ -26,7 +27,8 @@ public:
         GREETING,
         GREETING_REPLY,
         ORIGIN,
-        SEQNUM
+        SEQNUM,
+        WANT
     };
 
 
@@ -37,15 +39,21 @@ public:
     void setMessageKeys();
     bool isLocalHostAddress(const QHostAddress &address);
     void sendBroadcastMessage(const QString &message);
+    quint16 randNeighbor();
+    bool sendStatus(const QString &origin, QHostAddress &addr, quint16 &port);
+    bool sendMessageToHost(const QString &origin,const quint16 seqno, QHostAddress &addr, quint16 &port);
 
     signals:
         void newMessage(const QString &from, const QString &message);
         void newParticipant(const QString &username);
         void participantLeft(const QString &username);
+        void rumorStop();
 
-private slots:
+public slots:
+    void rumorTimeOutHandler();
     void sendBroadcastGreeting();
     void readBroadcastMessage();
+    void rumorMongering(const QString &origin);
 
 private:
     void updateAddresses();
@@ -59,6 +67,7 @@ private:
     QByteArray username;
     MessageType mtype;
     QList<QString> messageKeys;
+    QTimer *rmtimer;
 };
 
 #endif
